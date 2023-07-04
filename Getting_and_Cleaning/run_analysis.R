@@ -21,3 +21,13 @@ unzip(zipfile = "dataFiles.zip")
 train <- fread(file.path(path, "UCI HAR Dataset/train/X_train.txt"))[, featuresWanted, with = FALSE]
 test <- fread(file.path(path, "UCI HAR Dataset/test/X_test.txt"))[, featuresWanted, with = FALSE]
 dataset_combined <- rbind(train, test)
+
+# 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+# To be able to do that, I need to merge with the label first then I will be able to select the only the interesting measurements
+# Load activity labels + features
+activityLabels <- fread(file.path(path, "UCI HAR Dataset/activity_labels.txt"), col.names = c("classLabels", "activityName"))
+featuresLabels <- fread(file.path(path, "UCI HAR Dataset/features.txt"), col.names = c("index", "featureNames"))
+colnames(dataset_combined) <- featuresLabels[, featureNames]
+
+#Extracts only the measurements on the mean and standard deviation for each measurement.
+dataset_combined_mean_std = dataset_combined %>% select(matches("mean|std"))
