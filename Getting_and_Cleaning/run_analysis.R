@@ -41,8 +41,19 @@ testActivities <- fread(file.path(path, "UCI HAR Dataset/test/Y_test.txt"), col.
 testSubjects <- fread(file.path(path, "UCI HAR Dataset/test/subject_test.txt"), col.names = c("SubjectNum"))
 test <- cbind(testSubjects, testActivities)
 
+# 4. Appropriately labels the data set with descriptive variable names.
 activities_subjects = rbind(train, test)
-dataset_combined <- cbind(activities_subjects, dataset_combined_mean_std)
+dataset_combined_mean_std <- cbind(activities_subjects, dataset_combined_mean_std)
 
-  # 4. Appropriately labels the data set with descriptive variable names.
-  # 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+# 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+library(reshape2)
+dataset_combined_mean_std[["Activity"]] <- factor(dataset_combined_mean_std[, Activity]
+                                 , levels = activityLabels[["classLabels"]]
+                                 , labels = activityLabels[["activityName"]])
+
+dataset_combined_mean_std[["SubjectNum"]] <- as.factor(dataset_combined_mean_std[, SubjectNum])
+dataset_combined_mean_std <- reshape2::melt(data = dataset_combined_mean_std, id = c("SubjectNum", "Activity"))
+dataset_combined_mean_std <- reshape2::dcast(data = dataset_combined_mean_std, SubjectNum + Activity ~ variable, fun.aggregate = mean)
+
+data.table::fwrite(x = dataset_combined_mean_std, file = "tidyData.txt", quote = FALSE)
