@@ -16,3 +16,8 @@ path <- getwd()
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(url, file.path(path, "dataFiles.zip")) # output : Content type 'application/zip' length 62556944 bytes (59.7 MB) downloaded 59.7 MB
 unzip(zipfile = "dataFiles.zip")
+
+# 1. Merges the training and the test sets to create one data set.
+train <- fread(file.path(path, "UCI HAR Dataset/train/X_train.txt"))[, featuresWanted, with = FALSE]
+test <- fread(file.path(path, "UCI HAR Dataset/test/X_test.txt"))[, featuresWanted, with = FALSE]
+dataset_combined <- rbind(train, test)
