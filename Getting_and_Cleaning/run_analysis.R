@@ -56,4 +56,4 @@ dataset_combined_mean_std[["SubjectNum"]] <- as.factor(dataset_combined_mean_std
 dataset_combined_mean_std <- reshape2::melt(data = dataset_combined_mean_std, id = c("SubjectNum", "Activity"))
 dataset_combined_mean_std <- reshape2::dcast(data = dataset_combined_mean_std, SubjectNum + Activity ~ variable, fun.aggregate = mean)
 
-data.table::fwrite(x = dataset_combined_mean_std, file = "tidyData.txt", quote = FALSE)
+write.table(x = dataset_combined_mean_std, file = "tidyData.txt", row.names = FALSE)
