@@ -14,5 +14,5 @@ packages <- c("data.table", "reshape2")
 sapply(packages, require, character.only=TRUE, quietly=TRUE)
 path <- getwd()
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(url, file.path(path, "dataFiles.zip"))
+download.file(url, file.path(path, "dataFiles.zip")) # output : Content type 'application/zip' length 62556944 bytes (59.7 MB) downloaded 59.7 MB
 unzip(zipfile = "dataFiles.zip")
