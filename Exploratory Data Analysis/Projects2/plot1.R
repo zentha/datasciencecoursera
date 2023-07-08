@@ -14,5 +14,5 @@ png("plot1.png", width=480, height=480)
 barplot(summarySCC_PM25[, Emissions]
         , names = summarySCC_PM25[, year]
         , xlab = "Years", ylab = "Emissions from PM2.5"
-        , main = " Total emissions from PM2.5 in the United States from 1999 to 2008")
+        , main = " Total emissions from PM2.5 in the US from 1999 to 2008")
 dev.off()
